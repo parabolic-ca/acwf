@@ -1,0 +1,27 @@
+<html>
+<head>
+    <!-- DSP library -->
+    <script type="text/javascript" src="dsp/dsp.js"></script>
+    <!-- ACWF core analysis library -->
+    <script type="text/javascript" src="acwf-core.js"></script>
+    <!-- ACWF canvas plotting library -->
+    <script type="text/javascript" src="acwf-canvas.js"></script>
+    <!-- Some sample data -->
+    <script type="text/javascript" src="sample-data.js"></script>
+</head>
+<body>
+  	<div id="phasor" style="width:400px;height:400px" />
+    <script>
+    	// generate a waveform set from the source data; this can contain multiple 
+		// series of waveform data that contain multiple cycles of wavefom samples.
+    	var wfSet = ACWF.WaveformSet.create(sampleData);
+    	// analyze a cycle of data starting at the specified sample 
+    	wfSet.analyze(0);
+    	// initialize the phasor plot to display itself inside the element
+    	// with id="phasor"
+    	var phasor = new ACWF.PhasorDiagram("phasor");
+    	// plot the waveform data
+    	phasor.plotWaveformSet(wfSet, 0);
+    </script>
+</body>
+</html>
