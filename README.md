@@ -15,8 +15,6 @@
 
 ### Basic Phasor Plot
 
-[sample.html](sample.html)
-
     <html>
     <head>
     <script type="text/javascript" src="dsp.js"></script>
