@@ -15,6 +15,8 @@
 
 ### Basic Phasor Plot
 
+[Sample](http://parabolic-ca.github.io/acwf/)
+
     <html>
     <head>
     <script type="text/javascript" src="dsp.js"></script>
