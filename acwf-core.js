@@ -30,7 +30,7 @@
 			showRms: true
 		},
 		phasor: {
-			showGrid: false
+			showGrid: true
 		},
 		harmonics: {
 			// Some chart libs don't behave nicely with large numbers of bars.
@@ -452,9 +452,13 @@
 			waveforms.forEach(function (waveform) {
 				if (waveform.analysis) {
 					var style = getPlotStyle(waveform);
+					var info = {
+						unit: waveform.unit || "default",
+						phase: waveform.phase || -1
+					};
 					var scaleName = waveform.unit;
 					if (!scaleName) scaleName = "default";
-					iterator(waveform.analysis.getPhasor(), style, scaleName);
+					iterator(waveform.analysis.getPhasor(), style, info);
 				}
 			});
 		}
@@ -556,6 +560,8 @@
 					case "limit":
 						this.limit(operation[op]);
 						break;
+					case "label":
+						this.label(operation[op]);
 					default:
 						break;
 				}
@@ -618,6 +624,20 @@
 			return this;
 		};
 
+		// Changes the "label" of the harmonic from a number
+		// to some other text. Format: { i: harmonic, label: "label" }
+		this.label = function(labelDef) {
+			labelDef = iterable(labelDef);
+			var me = this;
+			labelDef.forEach(function(def) {
+				var harmonic = findHarmonic(def.i, me.harmonics);
+				if (harmonic && def.label && def.label.length > 0) {
+					harmonic[0] = def.label;
+				}
+			});
+			return this;
+		};
+
 		// Finds the n-th harmonic in the given spectrum.
 		// If not found returns undefined.
 		function findHarmonic(n, harmonics) {
@@ -673,6 +693,12 @@
 	// Converts radians to degrees.
 	ACWF.rad2deg = function rad2deg(rad) {
 		var deg = (rad * 180) / Math.PI;
+		if (deg > 180) {
+			deg = deg - 360;
+		} 
+		if (deg < -180) {
+			deg = deg + 360;
+		}
 		return deg;
 	};
 

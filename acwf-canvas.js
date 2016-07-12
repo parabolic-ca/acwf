@@ -472,19 +472,20 @@
 		this.plotWaveformSet = function (waveformSet, reference, acwfOptions) {
 			var engine = phasor.getEngine();
 			var referenceAngle = waveformSet.phasor(reference) ? waveformSet.phasor(reference).angle : 0;
-			waveformSet.iteratePhasors(function (phasor, style, scale) {
+			waveformSet.iteratePhasors(function (phasor, style, info) {
 				engine.addPhasor(
 					phasor.magnitude,
 					phasor.relative(referenceAngle),
 					style,
 					phasor.label,
-					scale);
+					info.unit);
 
 			});
 			phasor.drawPhasors(engine.getShapes(showGrid));		
 		}
 
 	};
+
 
 //=========================================================
 })(window.ACWF = window.ACWF || {});
